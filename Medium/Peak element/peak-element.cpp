@@ -15,27 +15,17 @@ class Solution
     int peakElement(int arr[], int n)
     {
        // Your code here
-        int left = 0, right = n - 1;
-
-        while (left < right) {
-            int mid = left + (right - left) / 2;
-
-            // If mid is greater than its neighbors, mid could be a peak or there is a peak on the left side
-            if (arr[mid] > arr[mid + 1]) {
-                right = mid;
-            } else {
-                // If mid is less than its right neighbor, there is a peak on the right side
-                left = mid + 1;
-            }
-        }
-
-        // At the end, left and right will converge to a peak element
-        return left;
+       int mx=arr[0];
+       int ans=0;
+       for(int i=0 ; i<n ; i++){
+           if(mx<=arr[i]){
+               mx=arr[i];
+               ans=i;
+           }
+       }
+       return ans;
     }
 };
-
-
-
 
 //{ Driver Code Starts.
 
