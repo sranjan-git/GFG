@@ -1,72 +1,19 @@
-//{ Driver Code Starts
-// Initial Template for Java
-
-import java.util.*;
-import java.io.*;
-import java.lang.*;
-
-class Main {
-    public static void main(String[] args) throws IOException {
-        Scanner sc = new Scanner(System.in);
-        int t = sc.nextInt();
-
-        while (t-- > 0) {
-
-            int n = sc.nextInt();
-            int m = sc.nextInt();
-            int[][] adj = new int[m][3];
-
-            for (int i = 0; i < m; i++) {
-
-                for (int j = 0; j < 3; j++) {
-                    adj[i][j] = sc.nextInt();
-                }
-            }
-
-            int dist = sc.nextInt();
-            Solution obj = new Solution();
-            int ans = obj.findCity(n, m, adj, dist);
-            System.out.println(ans);
-        }
-    }
-}
-
-// } Driver Code Ends
 
 
-class Solution {
-       int findCity(int n, int m, int[][] e,int d)
-      {
-          int[][] ma=new int[n][n];
-          for(int[] r:ma){
-          Arrays.fill(r,10001);}
-          for(int i=0;i<n;i++){
-              ma[i][i]=0;
-          }
-          for(int[]it:e){
-              ma[it[0]][it[1]]=ma[it[1]][it[0]]=it[2];
-          }
-          for(int k=0;k<n;k++){
-              for(int i=0;i<n;i++){
-                  for(int j=0;j<n;j++){
-                      ma[i][j]=Math.min(ma[i][j],ma[i][k]+ma[k][j]);
-                  }
-              }
-          }
-          int ans=-1;
-          int ne=n+1;
-          for(int i=0;i<n;i++){
-              int cnt=0;
-              for(int j=0;j<n;j++){
-                  if(ma[i][j]<=d)cnt++;
-              }
-              if(cnt<=ne){
-                  ne=cnt;
-                  ans=i;
-              }
-          }
-          return ans;
-      
 
-      }
-}
+
+
+
+
+
+
+class Solution {      int findCity(int n, int m, int[][] edges,int distanceThreshold)      {          //code here         int[][] dist=new int[n][n];        for(int i=0;i<n;i++){            for(int j=0;j<n;j++) dist[i][j]=Integer.MAX_VALUE;        }        for(int i=0;i<edges.length;i++){            dist[edges[i][0]][edges[i][1]]=edges[i][2];            dist[edges[i][1]][edges[i][0]]=edges[i][2];        }
+        for(int i=0;i<n;i++) dist[i][i]=0;        for(int k=0;k<n;k++){            for(int i=0;i<n;i++){                for(int j=0;j<n;j++){                    if(dist[i][k]==Integer.MAX_VALUE||dist[k][j]==Integer.MAX_VALUE) continue;                    dist[i][j]=Math.min(dist[i][j],dist[i][k]+dist[k][j]);                }            }        }        int cnt=n;        int ans=-1;        for(int i=0;i<n;i++){            int c=0;            for(int j=0;j<n;j++){                if(dist[i][j]<=distanceThreshold) c++;            }            if(c<=cnt){                cnt=c;                ans=i;            }        }        return ans;      }}
+
+
+
+
+
+
+
+
