@@ -80,36 +80,39 @@ Node *buildTree(string str) {
 
 
 // } Driver Code Ends
+/* A binary tree node
+struct Node
+{
+    int data;
+    Node* left, * right;
+}; */
 
+/*you are required to
+complete this function */
 class Solution {
   public:
-    bool dfs(Node*r,int t,int& s){
-        if(r==NULL){
-            return false;
-        }
-        s+=r->data;
-        
-        if(dfs(r->left,t,s)==false and
-        dfs(r->right,t,s)==false){
-            if(s==t and (r->left==NULL and r->right==NULL)) {
-                
-                return true;
+    bool hasPathSum(Node *root, int target) {
+        queue<Node*> q;
+        q.push(root);
+        map<Node*,int>m;
+        m[root]=root->data;
+        while(!q.empty()){
+            int s=q.size();
+            while(s--){
+                auto q1=q.front();
+                q.pop();
+                if(m[q1]>target) continue;
+                if(!q1->left and !q1->right and m[q1]==target) return true;
+                if(q1->left) { q.push(q1->left); m[q1->left]=m[q1]+q1->left->data;}
+                if(q1->right) { q.push(q1->right); m[q1->right]=m[q1]+q1->right->data;}
             }
-            else
-            s-=r->data;
-           
         }
-        else return true;
-       
         return false;
         
     }
-    bool hasPathSum(Node *root, int target) {
-        int s=0;
-        return dfs(root,target,s);
-       
-    }
 };
+
+
 
 
 //{ Driver Code Starts.
