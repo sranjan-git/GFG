@@ -4,22 +4,22 @@ using namespace std;
 
 
 // } Driver Code Ends
-
 class Solution {
   public:
-    int kthElement(int k, vector<int>& arr1, vector<int>& arr2) {
-       vector<int>result;
-       for(auto it:arr1){
-           result.push_back(it);
-       }
-       for(auto it:arr2){
-           result.push_back(it);
-       }
-       sort(begin(result),end(result));
-      return result[k-1];
+    int kthElement(vector<int>& a, vector<int>& b, int k) {
+        
+        for(int i=0,j=0;k>0;k--){
+            if(k==1){
+                if(j==b.size()) return a[i];
+                if(i==a.size()) return b[j];
+                return min(a[i], b[j]);
+            }
+            if(j==b.size() || (i<a.size() && a[i] < b[j])) i++;
+            else j++;
+        }
+        return max(a.back(), b.back());
     }
 };
-
 
 //{ Driver Code Starts.
 
@@ -34,22 +34,22 @@ int main() {
         cin.ignore();
         string input;
         int num;
-        vector<int> arr1, arr2;
+        vector<int> a, b;
 
         getline(cin, input);
         stringstream s2(input);
         while (s2 >> num) {
-            arr1.push_back(num);
+            a.push_back(num);
         }
 
         getline(cin, input);
         stringstream s3(input);
         while (s3 >> num) {
-            arr2.push_back(num);
+            b.push_back(num);
         }
 
         Solution ob;
-        cout << ob.kthElement(k, arr1, arr2) << endl;
+        cout << ob.kthElement(a, b, k) << endl << "~\n";
     }
     return 0;
 }
