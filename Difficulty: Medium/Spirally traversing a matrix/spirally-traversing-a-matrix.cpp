@@ -6,52 +6,37 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    vector<int> spirallyTraverse(vector<vector<int> > &matrix) {
-        // code here
-        int n=matrix.size();//row i
-        int m=matrix[0].size();//col j
-        int up=0;
-        int right=m-1;
-        int down=n-1;
-        int left=0;
-        int totcount=m*n;
-        int count=0;
+    vector<int> spirallyTraverse(vector<vector<int> > &mat) {
+        int n=mat.size();
+        int m=mat[0].size();
+        int left=0,right=m-1;
+        int top=0, bottom=n-1;
         vector<int>ans;
-        
-        
-        while(true)
-        {
-            for(int j=left;j<=right;j++)
-            {
-                ans.push_back(matrix[up][j]);
-                count++;
+        while(left<=right && top<=bottom){
+            for(int i=left;i<=right;i++){
+                ans.push_back(mat[top][i]);
             }
-            if(count==totcount)break;
-            up++;
-            for(int i=up;i<=down;i++)
-            {
-                ans.push_back(matrix[i][right]);
-                count++;
+            top++;
+            for(int i=top;i<=bottom;i++){
+                ans.push_back(mat[i][right]);
             }
-            if(count==totcount)break;
             right--;
-            for(int j=right;j>=left;j--)
-            {
-                ans.push_back(matrix[down][j]);
-                count++;
+            if(top<=bottom){
+            for(int i=right;i>=left;i--){
+                ans.push_back(mat[bottom][i]);
             }
-            if(count==totcount)break;
-            down--;
-            for(int i=down;i>=up;i--)
-            {
-                ans.push_back(matrix[i][left]);
-                count++;
+            bottom--;
             }
-            if(count==totcount)break;
+            if(left<=right){
+            for(int i=bottom;i>=top;i--){
+                ans.push_back(mat[i][left]);
+            }
             left++;
         }
+        }
         return ans;
-    }
+        
+    }  
 };
 
 //{ Driver Code Starts.
@@ -62,9 +47,10 @@ int main() {
     while (t--) {
         int r, c;
         cin >> r >> c;
-        vector<vector<int>> matrix(r, vector<int>(c, 0));
+        vector<vector<int>> matrix(r);
 
         for (int i = 0; i < r; i++) {
+            matrix[i].assign(c, 0);
             for (int j = 0; j < c; j++) {
                 cin >> matrix[i][j];
             }
@@ -75,6 +61,9 @@ int main() {
         for (int i = 0; i < result.size(); ++i)
             cout << result[i] << " ";
         cout << endl;
+
+        cout << "~"
+             << "\n";
     }
     return 0;
 }
