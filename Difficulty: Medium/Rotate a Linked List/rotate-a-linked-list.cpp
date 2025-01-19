@@ -38,23 +38,33 @@ struct Node {
 
 class Solution {
   public:
-    // Function to rotate a linked list.
     Node* rotate(Node* head, int k) {
-          int len=0;
+        // Your code here
+        if(k==0 ||!head ||!head->next)
+            return head;
+        Node* tail=head;
+        int c=1;
+        while(tail->next!=NULL)
+        {
+            tail=tail->next;
+            c++;//count of nodes
+        }
+        k=k%c; //if k>=c
+        if(k==0)    return head;
+        
+        tail->next=head; //make it a circular LL
+
         Node* temp=head;
-        while(temp) len++,temp=temp->next;
-        if(k%len==0) return head;
-        temp=head;
-        while(--k && temp) temp=temp->next;
-        Node* ntemp=temp->next;
-        Node* nntemp=ntemp;
+        for(int i=1;i<k;i++)
+        {
+            temp=temp->next;
+        }
+        Node* newHead=temp->next;
         temp->next=NULL;
-        while(nntemp->next) nntemp=nntemp->next;
-        nntemp->next=head;
-        return ntemp;
+        
+        return newHead;
     }
 };
-
 
 
 //{ Driver Code Starts.
@@ -94,6 +104,7 @@ int main() {
         Solution ob;
         head = ob.rotate(head, k);
         printList(head);
+        cout << "~\n";
     }
     return 1;
 }
